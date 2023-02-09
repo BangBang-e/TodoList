@@ -22,6 +22,6 @@ function MainContainer({ children }) {
             {children}
         </Container>
     );
-}
+};
 
 export default MainContainer;

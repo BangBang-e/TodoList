@@ -1,88 +1,106 @@
-import React from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
-const TodoDrop = styled.div`
+const DDContainer = styled.div`
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-margin-top: 3px;
-
-    .body {
+    margin-top: 3px;
     font-family: sans-serif;
     display: flex;
     justify-content: center;
-    }
-    .container {
     position: relative;
-    height: 25px;
-    z-index: 10;
-    }
-    #dropdown {
-    left: 0;
-    visibility: hidden;
-    position: absolute;
-    }
-    .dropdownLabel {
+    bottom: 10px;
+`;
+
+const DDBtn = styled.div`
+    cursor: pointer;
     display: flex;
-    justify-content: space-between;
-    padding: 12px;
+    left: 0;
+    position: absolute;
+    font-size: 1.2rem;
+    transition: 0.1s ease-out;
+    .selected {
+        margin-right: 3px;
     }
-    .dropdownLabel:hover {
+    :hover {
     cursor: pointer;
     }
-    .content {
-    display: none;
-    position: absolute;
-    left: 5px;
-    top: 25px;
-    height: 110px;
-    border-radius: 3px;
-    background: white;
-    box-shadow: rgba(50, 50, 93, 0.45) 0px 6px 12px -2px, rgba(0, 0, 0, 0.45) 0px 3px 7px -3px;
-    }
-
-    #dropdown:checked + label + div.content {
-    display: block;
-    border-top: 1px solid #00000026;
-    }
-    .dropdownIcon {
-    transition: transform 0.2s ease-out;
-    margin: 1px 0 0 5px
-    }
-    #dropdown:checked + label > .dropdownIcon {
+    .close {
     transform: rotate(-90deg);
-    transition: 0.2s;
+    transition: transform 0.2s ease-out;
     }
-
-    .content ul {
-    list-style-type: none;
-    padding: 5px 12px 0px 12px;
-    margin: 0;
-    }
-    .content li {
-    margin: 0.8rem 0;
-    text-align: right;
+    .open {
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-out;
     }
 `;
 
+const DDContent = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    right: 10px;
+    top: 88px;
+    width: 60px;
+    height: 100px;
+    border-radius: 3px;
+    background: white;
+    box-shadow: rgba(50, 50, 93, 0.45) 0px 6px 12px -2px, rgba(0, 0, 0, 0.45) 0px 3px 7px -3px;
+    ul {
+    list-style-type: none;
+    position: relative;
+    margin-top: 5px;
+    bottom: 5px;
+    right: 20px;
+    }
+    li {
+    margin-top: 8px;
+    padding: 3px 10px 1px 15px;
+    text-align: right;
+    }
+    li:hover {
+    cursor: pointer;
+    background: rgba(100, 100, 100, 0.1);
+    }
+`;
+
+const DDBackdrop = styled.div`
+position: absolute;
+    width: 393px;
+    height: 715px;
+    top: -64px;
+    right: -67px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0);
+    z-index: 300;
+`;
+
 const DropDown = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openDDHandler = () => {
+        console.log('드롭다운')
+        setIsOpen(!isOpen);
+    };
     return (
-        <TodoDrop className="body">
-            <div className="container">
-                <input id="dropdown" type="checkbox" />
-                <label className="dropdownLabel" for="dropdown">
-                    <div>All</div>
-                    <FontAwesomeIcon icon={faAngleLeft} className='dropdownIcon' />
-                </label>
-                <div className="content">
-                    <ul>
-                        <li>All</li>
-                        <li>Todo</li>
-                        <li>Done</li>
-                    </ul>
-                </div>
-            </div>
-        </TodoDrop>
+        <DDContainer>
+            <DDBtn onClick={openDDHandler} >
+                <div className='selected'>All</div>
+                <FontAwesomeIcon icon={faAngleLeft} className={isOpen ? "close" : "open"} />
+            </DDBtn>
+            {isOpen ?
+                <DDBackdrop onClick={openDDHandler}>
+                    <DDContent>
+                        <ul>
+                            <li>All</li>
+                            <li>Todo</li>
+                            <li>Done</li>
+                        </ul>
+                    </DDContent>
+                </DDBackdrop>
+                : null}
+        </DDContainer>
     );
 };
 

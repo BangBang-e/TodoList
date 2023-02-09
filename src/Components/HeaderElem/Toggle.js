@@ -7,6 +7,8 @@ const ToggleContainer = styled.div`
     margin-top: 3px;
     width: 93px;
     height: 23px;
+    bottom: 3px;
+    right: 15px;
     z-index: 1;
     border-radius: 3px;
     background-color: #FFFFFF;
@@ -36,7 +38,7 @@ const ToggleText = styled.div`
     font-weight: 500;
     margin: 2px 0px 0px 2px;
     text-align: center;
-    color: ${(props) => (props.on ? '#A9A9A9' : '#FFFFFF')};
+    color: ${(props) => (props._on ? '#A9A9A9' : '#FFFFFF')};
     z-index: 3;
     transition: 0.2s;
 `
@@ -45,20 +47,18 @@ export const Toggle = () => {
     const [isOn, setisOn] = useState(false);
 
     const toggleHandler = () => {
-        console.log('실행')
+        console.log('토글 스위치')
         setisOn(!isOn)
     };
 
     return (
-        <>
-            <ToggleContainer onClick={toggleHandler}>
-                <ToggleCircle checked={isOn} />
-                <ToggleTextContainer>
-                    <ToggleText on={isOn}>오늘</ToggleText>
-                    <ToggleText on={!isOn}>모두</ToggleText>
-                </ToggleTextContainer>
-            </ToggleContainer>
-        </>
+        <ToggleContainer onClick={toggleHandler}>
+            <ToggleCircle checked={isOn} />
+            <ToggleTextContainer>
+                <ToggleText _on={isOn}>오늘</ToggleText>
+                <ToggleText _on={!isOn}>모두</ToggleText>
+            </ToggleTextContainer>
+        </ToggleContainer>
     );
 };
 

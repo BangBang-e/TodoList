@@ -31,6 +31,7 @@ const ModalView = styled.div.attrs(props => ({
         align-items: center;
     }
     .input--title {
+        cursor: default;
         width: 312px;
         height: 35px;
         box-shadow: inset 0px 1px 6px rgba(0, 0, 0, 0.15);
@@ -45,6 +46,7 @@ const ModalView = styled.div.attrs(props => ({
         :-ms-input-placeholder {color:rgba(180, 180, 180);}
     }
     .input--body {
+        cursor: default;
         width: 312px;
         height: 126px;
         box-shadow: inset 0px 1px 6px rgba(0, 0, 0, 0.15);
@@ -121,7 +123,7 @@ const ModalView = styled.div.attrs(props => ({
 `;
 
 const Calendar = styled.div`
-    cursor: pointer;
+    cursor: default;
     display: flex;
     position: relative;
     align-items: center;
@@ -132,107 +134,39 @@ const Calendar = styled.div`
     border: none;
     border-radius: 12px;
     margin: 25px 5px 10px 0;
-    padding: 0 1px 0 9px;
+    padding: 0 1px 0 8px;
     color: rgba(120, 120, 120);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    div {
+        margin: 1px 0 0 8px;
+    }
 `;
 
-const DatePick = styled(DatePicker)`
-    cursor: pointer;
-    width: 66px;
-    height: 11px;
-    border: none;
-    text-align: end;
-    color: rgba(120, 120, 120);
-`
+const ModalDetail = ({ todos, setTodos }) => {
 
-const ModalAdd = ({ todos }) => {
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [done, setDone] = useState('false');
-    const [date, setDate] = useState(new Date());
-    const handleOnKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleSubmit();
-        }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2);
-        const day = ('0' + date.getDate()).slice(-2);
-        const data = {
-            id: uuidv4(),
-            title, body, done,
-            date: `${year}.${month}.${day}`
-        };
-
-        setTimeout(() => {
-            fetch(`http://localhost:3001/todos/`, {
-                method: "POST",
-                headers: { "Content-type": "Application/json" },
-                body: JSON.stringify(data)
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        throw Error('could not fetch the data for that resource');
-                    }
-                    return res.json();
-                })
-                .then(() => {
-                    window.location.reload();
-                })
-                .catch(err => {
-                    console.error("Error", err);
-                })
-        }, 10);
-    }
     return (
         <ModalView onClick={e => e.stopPropagation()}>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div className="topContainer">
                     <Calendar >
                         <FontAwesomeIcon icon={faCalendar} />
-                        <DatePick
-                            selected={date}
-                            value={date}
-                            onChange={(date) => {
-                                setDate(date)
-                            }}
-                            locale={ko}
-                            dateFormat="yyyy.MM.dd"
-                            disabledKeyboardNavigation
-                        />
+                        <div>{todos.date}</div>
                     </Calendar>
                 </div>
                 <input
                     className="input--title"
                     type="text"
-                    required
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Todo"
-                    maxLength="20"
+                    readOnly
+                    value={todos.title}
                 />
                 <textarea
                     className="input--body"
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                    placeholder="Memo"
-                    rows="10"
+                    value={todos.body}
+                    readOnly
                 />
-                <div className="submit">
-                    <button className="todoSubmit">
-                        <FontAwesomeIcon
-                            icon={faArrowUp}
-                            value={done}
-                            onChange={(e) => setDone(e.target.value)} />
-                    </button>
-                </div>
             </form>
         </ModalView>
     );
 };
 
-export default ModalAdd;
+export default ModalDetail;

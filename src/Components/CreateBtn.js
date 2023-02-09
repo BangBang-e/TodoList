@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -6,8 +6,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalAdd from './ModalElem/ModalAdd.js';
 
 const Container = styled.div`
-    width: 100vw;
-    height: 100vh;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -47,17 +45,16 @@ const ModalBtn = styled.button`
     }
 `;
 const ModalBackdrop = styled.div`
+    position: absolute;
     width: 393px;
     height: 715px;
-    position: absolute;
-    right: 0;
-    top: 0;
+    bottom: 0px;
     border-radius: 10px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    z-index: 99;
+    z-index: 999;
     background:linear-gradient(180deg, rgba(150, 150, 150, 0)  13%, rgba(150, 150, 150, 0.2) 13%);
 `;
 
@@ -65,22 +62,21 @@ const CreateBtn = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const openModalHandler = () => {
+        console.log('생성 버튼')
         setIsOpen(!isOpen);
     };
 
     return (
-        <>
-            <Container>
-                <ModalBtn onClick={openModalHandler} >
-                    <FontAwesomeIcon icon={faPlus} className={isOpen ? "close" : "plus"} />
-                </ModalBtn>
-                {isOpen ?
-                    <ModalBackdrop onClick={openModalHandler}>
-                        <ModalAdd />
-                    </ModalBackdrop>
-                    : null}
-            </Container>
-        </>
+        <Container>
+            <ModalBtn onClick={openModalHandler} >
+                <FontAwesomeIcon icon={faPlus} className={isOpen ? "close" : "plus"} />
+            </ModalBtn>
+            {isOpen ?
+                <ModalBackdrop onClick={openModalHandler}>
+                    <ModalAdd />
+                </ModalBackdrop>
+                : null}
+        </Container>
     );
 };
 
