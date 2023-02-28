@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const ToggleContainer = styled.div`
@@ -17,9 +17,9 @@ const ToggleContainer = styled.div`
 
 const ToggleCircle = styled.div`
     position: absolute;
-    left: ${(props) => (props.checked ? '47px' : '2px')};
     top: 8.7%;
     bottom: 8.7%;
+    left: ${(props) => (props.checked ? '47px' : '2px')};
     z-index: 2;
     width: 44px;
     height: 19px;
@@ -43,7 +43,7 @@ const ToggleText = styled.div`
     transition: 0.2s;
 `
 
-export const Toggle = () => {
+function Toggle() {
     const [isOn, setisOn] = useState(false);
 
     const toggleHandler = () => {
@@ -60,6 +60,6 @@ export const Toggle = () => {
             </ToggleTextContainer>
         </ToggleContainer>
     );
-};
+}
 
 export default Toggle;

@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-brands-svg-icons": "^6.2.1",
-    "@fortawesome/free-regular-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -29,20 +24,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "no-unused-vars": "warn"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.ts?(x)"
-        ],
-        "rules": {
-          "max-len": "warn"
-        }
-      }
+      "react-app",
+      "react-app/jest"
     ]
   },
   "browserslist": {
@@ -61,11 +44,11 @@
     "styled-components": "^5"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
-    "babel-loader": "^9.1.2",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.2",
     "webpack": "^5.75.0"
   }

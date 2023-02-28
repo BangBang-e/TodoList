@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { IoIosArrowBack } from "react-icons/io";
 
 const DDContainer = styled.div`
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -76,7 +75,7 @@ position: absolute;
     z-index: 300;
 `;
 
-const DropDown = () => {
+function DropDown() {
     const [isOpen, setIsOpen] = useState(false);
 
     const openDDHandler = () => {
@@ -87,7 +86,7 @@ const DropDown = () => {
         <DDContainer>
             <DDBtn onClick={openDDHandler} >
                 <div className='selected'>All</div>
-                <FontAwesomeIcon icon={faAngleLeft} className={isOpen ? "close" : "open"} />
+                <IoIosArrowBack className={isOpen ? "close" : "open"} />
             </DDBtn>
             {isOpen ?
                 <DDBackdrop onClick={openDDHandler}>
@@ -102,6 +101,6 @@ const DropDown = () => {
                 : null}
         </DDContainer>
     );
-};
+}
 
 export default DropDown;
