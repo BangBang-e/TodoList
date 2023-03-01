@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import TodoDetail from './TodoDetail';
-import { MdDone, MdDelete } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 import styled from 'styled-components';
 

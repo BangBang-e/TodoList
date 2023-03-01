@@ -161,7 +161,7 @@ const DatePick = styled(DatePicker)`
   color: rgba(120, 120, 120);
 `;
 
-const ModalAdd = ({ todos }) => {
+const ModalAdd = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [done, setDone] = useState('false');

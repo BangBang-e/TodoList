@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from 'date-fns/esm/locale';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
-import { TiArrowSortedUp } from 'react-icons/ti';
 
 import styled from 'styled-components';
 
@@ -142,8 +137,8 @@ const Calendar = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  left: -109px;
-  width: 95px;
+  left: -96px;
+  width: 115px;
   height: 24px;
   box-shadow: inset 0px 1px 6px rgba(0, 0, 0, 0.15);
   border: none;
@@ -157,7 +152,7 @@ const Calendar = styled.div`
   }
 `;
 
-const TodoDetail = ({ todos, setTodos }) => {
+const TodoDetail = ({ todos }) => {
   return (
     <ModalView onClick={(e) => e.stopPropagation()}>
       <form>
