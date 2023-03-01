@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router';
 import styled from 'styled-components';
 
 import Header from './Components/Header';
-import TodoList from './Components/TodoList';
+import TodoList_All from './Pages/TodoList_All';
+import TodoList_Todo from './Pages/TodoList_Todo';
+import TodoList_Done from './Pages/TodoList_Done';
 import CreateBtn from './Components/CreateBtn';
 
 const MainContainer = styled.div`
@@ -21,6 +24,10 @@ const MainContainer = styled.div`
 function App() {
   const [todos, setTodos] = useState(null);
   const [isPending, setIsPending] = useState(true);
+  const [isOn, setisOn] = useState(false);
+  const onUpdate = (updated) => {
+    setTodos(todos.map((ele) => (ele.id === updated.id ? updated : ele)));
+  };
 
   useEffect(() => {
     fetch('http://localhost:4000/todos/', {
@@ -33,12 +40,58 @@ function App() {
       });
   }, []);
 
+  function dateFormat(date) {
+    let formatter =
+      date.getFullYear() +
+      '.' +
+      (date.getMonth() + 1 < 9
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1) +
+      '.' +
+      (date.getDate() < 9 ? '0' + date.getDate() : date.getDate());
+    return formatter;
+  }
+
   return (
     <>
       {isPending || (
         <MainContainer>
-          <Header />
-          <TodoList todos={todos} setTodos={setTodos} />
+          <Header isOn={isOn} setisOn={setisOn} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <TodoList_All
+                  todos={todos}
+                  dateFormat={dateFormat}
+                  onUpdate={onUpdate}
+                  isOn={isOn}
+                />
+              }
+            />
+            <Route
+              path="/todo"
+              element={
+                <TodoList_Todo
+                  todos={todos}
+                  dateFormat={dateFormat}
+                  onUpdate={onUpdate}
+                  isOn={isOn}
+                />
+              }
+            />
+            <Route
+              path="/done"
+              element={
+                <TodoList_Done
+                  todos={todos}
+                  dateFormat={dateFormat}
+                  onUpdate={onUpdate}
+                  isOn={isOn}
+                />
+              }
+            />
+          </Routes>
           <CreateBtn />
         </MainContainer>
       )}

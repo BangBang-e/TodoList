@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { MdDone, MdDelete } from 'react-icons/md';
+import { useState } from 'react';
+
 import TodoDetail from './TodoDetail';
+import { MdDone, MdDelete } from 'react-icons/md';
+
+import styled from 'styled-components';
 
 const Remove = styled.div`
   right: 20px;
@@ -18,7 +20,6 @@ const Remove = styled.div`
     transition: 0.2s ease-out;
   }
 `;
-
 const TodoItemBlock = styled.div`
   display: flex;
   align-items: center;
@@ -30,7 +31,6 @@ const TodoItemBlock = styled.div`
     justify-content: space-between;
   }
 `;
-
 const Mark = styled.div`
   width: 0.22rem;
   height: 1rem;
@@ -39,7 +39,6 @@ const Mark = styled.div`
   background-color: #f2bc74;
   opacity: 0.5;
 `;
-
 const CheckBox = styled.input`
   cursor: pointer;
   appearance: none;
@@ -60,17 +59,14 @@ const CheckBox = styled.input`
     background-repeat: no-repeat;
   }
 `;
-
 const StyledLabel = styled.label`
   display: flex;
   align-items: center;
   user-select: none;
 `;
-
 const StyledP = styled.p`
   margin-left: 0.25rem;
 `;
-
 const Date = styled.div`
   font-size: 0.7rem;
   text-align: end;
@@ -78,7 +74,6 @@ const Date = styled.div`
   padding-top: 2px;
   color: #868686;
 `;
-
 const Text = styled.div`
   flex: 1;
   margin-left: 5px;
@@ -86,7 +81,6 @@ const Text = styled.div`
   cursor: pointer;
   color: ${(props) => (props.checked ? '#C9C9C9' : 'black')};
 `;
-
 const ModalBackdrop = styled.div`
   position: absolute;
   width: 393px;
@@ -124,7 +118,7 @@ function TodoItem({ todos, setTodos, onUpdate, text }) {
       date: date,
     };
     setTimeout(() => {
-      fetch(`http://localhost:3001/todos/${id}`, {
+      fetch(`http://localhost:4000/todos/${id}`, {
         method: 'PATCH',
         headers: { 'Content-type': 'Application/json' },
         body: JSON.stringify(a),
@@ -136,7 +130,7 @@ function TodoItem({ todos, setTodos, onUpdate, text }) {
   };
   const handleDeleteClick = () => {
     setTimeout(() => {
-      fetch(`http://localhost:3001/todos/${todos.id}`, {
+      fetch(`http://localhost:4000/todos/${todos.id}`, {
         method: 'DELETE',
       })
         .then((res) => {

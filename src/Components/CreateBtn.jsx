@@ -1,8 +1,9 @@
-import { React, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 
 import ModalAdd from './ModalElem/ModalAdd.jsx';
 import { TfiPlus } from 'react-icons/tfi';
+
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { TiArrowSortedUp } from 'react-icons/ti';
+
+import styled from 'styled-components';
 
 const ModalView = styled.div.attrs((props) => ({
   role: 'dialog',
@@ -137,7 +136,6 @@ const ModalView = styled.div.attrs((props) => ({
     }
   }
 `;
-
 const Calendar = styled.div`
   cursor: pointer;
   display: flex;
@@ -154,7 +152,6 @@ const Calendar = styled.div`
   color: rgba(120, 120, 120);
   font-size: 0.85rem;
 `;
-
 const DatePick = styled(DatePicker)`
   cursor: pointer;
   width: 66px;
@@ -169,11 +166,6 @@ const ModalAdd = ({ todos }) => {
   const [body, setBody] = useState('');
   const [done, setDone] = useState('false');
   const [date, setDate] = useState(new Date());
-  const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit();
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -189,7 +181,7 @@ const ModalAdd = ({ todos }) => {
     };
 
     setTimeout(() => {
-      fetch(`http://localhost:3001/todos/`, {
+      fetch(`http://localhost:4000/todos/`, {
         method: 'POST',
         headers: { 'Content-type': 'Application/json' },
         body: JSON.stringify(data),

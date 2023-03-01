@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import Toggle from './HeaderElem/Toggle';
@@ -24,10 +23,10 @@ const Container = styled.div`
   }
 `;
 
-function Header() {
+function Header({ isOn, setisOn }) {
   return (
     <Container>
-      <Toggle />
+      <Toggle isOn={isOn} setisOn={setisOn} />
       <h1 className="Title">Todo-List</h1>
       <DropDown />
     </Container>

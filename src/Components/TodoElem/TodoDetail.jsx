@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { TiArrowSortedUp } from 'react-icons/ti';
+
+import styled from 'styled-components';
 
 const ModalView = styled.div.attrs((props) => ({
   role: 'dialog',
@@ -138,7 +137,6 @@ const ModalView = styled.div.attrs((props) => ({
     }
   }
 `;
-
 const Calendar = styled.div`
   cursor: default;
   display: flex;
