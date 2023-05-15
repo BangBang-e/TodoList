@@ -12,7 +12,6 @@ const Container = styled.div`
   border-bottom: 1px solid rgba(150, 150, 150, 0.2);
   background-color: rgba(212, 205, 169, 0.2);
   border-radius: 10px 10px 0px 0px;
-  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
   .Title {
     position: relative;

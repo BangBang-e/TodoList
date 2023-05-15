@@ -6,7 +6,6 @@ import { IoIosArrowBack } from 'react-icons/io';
 import styled from 'styled-components';
 
 const DDContainer = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
   margin-top: 3px;
   font-family: sans-serif;
   display: flex;
