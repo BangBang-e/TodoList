@@ -59,7 +59,7 @@ function App() {
           <Header isOn={isOn} setisOn={setisOn} />
           <Routes>
             <Route
-              path="/home"
+              path="/"
               element={
                 <TodoList_All
                   todos={todos}
