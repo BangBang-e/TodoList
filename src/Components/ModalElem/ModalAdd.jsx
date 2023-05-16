@@ -180,25 +180,11 @@ const ModalAdd = () => {
       date: `${year}.${month}.${day}`,
     };
 
-    setTimeout(() => {
-      fetch(`http://localhost:4000/todos/`, {
-        method: 'POST',
-        headers: { 'Content-type': 'Application/json' },
-        body: JSON.stringify(data),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw Error('could not fetch the data for that resource');
-          }
-          return res.json();
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((err) => {
-          console.error('Error', err);
-        });
-    }, 10);
+    const currentTodos = JSON.parse(localStorage.getItem('todos')) || [];
+    currentTodos.push(data);
+    localStorage.setItem('todos', JSON.stringify(currentTodos));
+
+    window.location.reload();
   };
   return (
     <ModalView onClick={(e) => e.stopPropagation()}>

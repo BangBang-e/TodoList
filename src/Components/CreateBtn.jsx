@@ -66,7 +66,6 @@ const CreateBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModalHandler = () => {
-    console.log('생성 버튼');
     setIsOpen(!isOpen);
   };
 

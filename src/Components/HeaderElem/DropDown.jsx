@@ -89,7 +89,6 @@ function DropDown() {
   ];
 
   const openDDHandler = () => {
-    console.log('드롭다운');
     setIsOpen(!isOpen);
   };
   const switchToClicked = (item) => {

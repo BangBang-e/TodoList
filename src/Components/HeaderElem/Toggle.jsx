@@ -41,7 +41,6 @@ const ToggleText = styled.div`
 
 function Toggle({ isOn, setisOn }) {
   const toggleHandler = () => {
-    console.log('토글 스위치');
     setisOn(!isOn);
   };
 

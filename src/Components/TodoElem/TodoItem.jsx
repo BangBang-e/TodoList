@@ -100,53 +100,39 @@ const ModalBackdrop = styled.div`
   );
 `;
 
-function TodoItem({ todos, setTodos, onUpdate, text }) {
+function TodoItem({ todos, setTodos, text }) {
   const { id, title, body, done, date } = todos;
   const [isOpen, setIsOpen] = useState(false);
 
   const openModalHandler = () => {
-    console.log('자세히 보기');
     setIsOpen(!isOpen);
   };
 
   const checkHandler = (e) => {
-    let a = {
+    let updatedTodo = {
       id: id,
       title: title,
       body: body,
       done: e.target.checked ? 'true' : 'false',
       date: date,
     };
+
     setTimeout(() => {
-      fetch(`http://localhost:4000/todos/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-type': 'Application/json' },
-        body: JSON.stringify(a),
-      }).then((res) => {
-        res.json(a);
-        onUpdate({ ...a });
-      });
-    });
-  };
-  const handleDeleteClick = () => {
-    setTimeout(() => {
-      fetch(`http://localhost:4000/todos/${todos.id}`, {
-        method: 'DELETE',
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw Error('could not fetch the data for that resource');
-          }
-          return res.json();
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((err) => {
-          console.error('Error', err);
-        });
+      const currentTodos = JSON.parse(localStorage.getItem('todos')) || [];
+      const newTodos = currentTodos.map((todo) =>
+        todo.id === id ? updatedTodo : todo
+      );
+      setTodos(newTodos);
+      localStorage.setItem('todos', JSON.stringify(newTodos));
     }, 10);
-    console.log('삭제!');
+  };
+
+  const handleDeleteClick = () => {
+    const currentTodos = JSON.parse(localStorage.getItem('todos')) || [];
+    const updatedTodos = currentTodos.filter((todo) => todo.id !== id);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+
+    window.location.reload();
   };
 
   return (
@@ -170,7 +156,7 @@ function TodoItem({ todos, setTodos, onUpdate, text }) {
       </Remove>
       {isOpen ? (
         <ModalBackdrop onClick={openModalHandler}>
-          <TodoDetail todos={todos} setTodos={setTodos} />
+          <TodoDetail todos={todos} setTodos={setTodos} setIsOpen={setIsOpen} />
         </ModalBackdrop>
       ) : null}
     </TodoItemBlock>

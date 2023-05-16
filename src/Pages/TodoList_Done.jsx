@@ -14,7 +14,7 @@ const TodoListBlock = styled.div`
   }
 `;
 
-function TodoList_Done({ todos, dateFormat, onUpdate, isOn }) {
+function TodoList_Done({ todos, setTodos, dateFormat, onUpdate, isOn }) {
   const doneTasks = todos.filter((todo) => todo.done === 'true');
   const todayOnly_Done = todos.filter(
     (todo) => todo.date === dateFormat(new Date()) && todo.done === 'true'
@@ -24,10 +24,20 @@ function TodoList_Done({ todos, dateFormat, onUpdate, isOn }) {
     <TodoListBlock>
       {isOn === false
         ? doneTasks.map((todo) => (
-            <TodoItem key={todo.id} todos={todo} onUpdate={onUpdate} />
+            <TodoItem
+              key={todo.id}
+              todos={todo}
+              setTodos={setTodos}
+              onUpdate={onUpdate}
+            />
           ))
         : todayOnly_Done.map((todo) => (
-            <TodoItem key={todo.id} todos={todo} onUpdate={onUpdate} />
+            <TodoItem
+              key={todo.id}
+              todos={todo}
+              setTodos={setTodos}
+              onUpdate={onUpdate}
+            />
           ))}
     </TodoListBlock>
   );

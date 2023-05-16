@@ -1,6 +1,11 @@
+import { useState, useEffect } from 'react';
+import { parse } from 'date-fns';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/esm/locale';
 
 import { FaRegCalendarAlt } from 'react-icons/fa';
+import { TiArrowSortedUp } from 'react-icons/ti';
 
 import styled from 'styled-components';
 
@@ -89,9 +94,10 @@ const ModalView = styled.div.attrs((props) => ({
     border-radius: 50%;
     background-color: #f3a339;
     box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-    margin-top: 6px;
+    margin-top: 12px;
+    padding-top: 4px;
     color: white;
-    font-size: 1rem;
+    font-size: 1.2rem;
     transition: 0.1s;
     :hover {
       background-color: #e47c01;
@@ -147,28 +153,96 @@ const Calendar = styled.div`
   padding: 0 1px 0 8px;
   color: rgba(120, 120, 120);
   font-size: 0.8rem;
-  div {
-    margin: 1px 0 0 8px;
-  }
+`;
+const DatePick = styled(DatePicker)`
+  cursor: pointer;
+  width: 66px;
+  height: 11px;
+  border: none;
+  text-align: end;
+  color: rgba(120, 120, 120);
 `;
 
-const TodoDetail = ({ todos }) => {
+const TodoDetail = ({ todos, setTodos, setIsOpen }) => {
+  const [title, setTitle] = useState(todos.title);
+  const [body, setBody] = useState(todos.body);
+  let initialDate = new Date();
+  if (todos.date) {
+    const parsedDate = parse(todos.date, 'yyyy.MM.dd', new Date());
+    if (!isNaN(parsedDate)) {
+      initialDate = parsedDate;
+    }
+  }
+
+  const [date, setDate] = useState(initialDate);
+
+  useEffect(() => {
+    setTitle(todos.title);
+    setBody(todos.body);
+
+    let updateDate = new Date();
+    if (todos.date) {
+      const parsedDate = parse(todos.date, 'yyyy.MM.dd', new Date());
+      if (!isNaN(parsedDate)) {
+        updateDate = parsedDate;
+      }
+    }
+    setDate(updateDate);
+  }, [todos]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+
+    const updatedTodo = {
+      ...todos,
+      title,
+      body,
+      date: `${year}.${month}.${day}`,
+    };
+    const currentTodos = JSON.parse(localStorage.getItem('todos')) || [];
+    const newTodos = currentTodos.map((todo) =>
+      todo.id === updatedTodo.id ? updatedTodo : todo
+    );
+    setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+    setIsOpen(false);
+  };
   return (
     <ModalView onClick={(e) => e.stopPropagation()}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="topContainer">
           <Calendar>
             <FaRegCalendarAlt />
-            <div>{todos.date}</div>
+            <DatePick
+              selected={date}
+              onChange={(date) => {
+                setDate(date);
+              }}
+              locale={ko}
+              dateFormat="yyyy.MM.dd"
+              disabledKeyboardNavigation
+            />
           </Calendar>
         </div>
         <input
           className="input--title"
           type="text"
-          readOnly
-          value={todos.title}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
-        <textarea className="input--body" value={todos.body} readOnly />
+        <textarea
+          className="input--body"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        />
+        <div className="submit">
+          <button type="submit" className="todoSubmit">
+            <TiArrowSortedUp />
+          </button>
+        </div>
       </form>
     </ModalView>
   );

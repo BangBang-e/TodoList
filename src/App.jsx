@@ -22,7 +22,9 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-  const [todos, setTodos] = useState(null);
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.getItem('todos')) || []
+  );
   const [isPending, setIsPending] = useState(true);
   const [isOn, setisOn] = useState(false);
   const onUpdate = (updated) => {
@@ -30,15 +32,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:4000/todos/', {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTodos(data);
-        setIsPending(false);
-      });
-  }, []);
+    setIsPending(false);
+  }, [todos]);
 
   function dateFormat(date) {
     let formatter =
@@ -63,6 +58,7 @@ function App() {
               element={
                 <TodoList_All
                   todos={todos}
+                  setTodos={setTodos}
                   dateFormat={dateFormat}
                   onUpdate={onUpdate}
                   isOn={isOn}
@@ -74,6 +70,7 @@ function App() {
               element={
                 <TodoList_Todo
                   todos={todos}
+                  setTodos={setTodos}
                   dateFormat={dateFormat}
                   onUpdate={onUpdate}
                   isOn={isOn}
@@ -85,6 +82,7 @@ function App() {
               element={
                 <TodoList_Done
                   todos={todos}
+                  setTodos={setTodos}
                   dateFormat={dateFormat}
                   onUpdate={onUpdate}
                   isOn={isOn}

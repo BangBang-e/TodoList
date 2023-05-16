@@ -14,7 +14,7 @@ const TodoListBlock = styled.div`
   }
 `;
 
-function TodoList_All({ todos, dateFormat, onUpdate, isOn }) {
+function TodoList_All({ todos, setTodos, dateFormat, onUpdate, isOn }) {
   const todayOnly_All = todos.filter(
     (todo) => todo.date === dateFormat(new Date())
   );
@@ -23,10 +23,20 @@ function TodoList_All({ todos, dateFormat, onUpdate, isOn }) {
     <TodoListBlock>
       {isOn === false
         ? todos.map((todo) => (
-            <TodoItem key={todo.id} todos={todo} onUpdate={onUpdate} />
+            <TodoItem
+              key={todo.id}
+              todos={todo}
+              setTodos={setTodos}
+              onUpdate={onUpdate}
+            />
           ))
         : todayOnly_All.map((todo) => (
-            <TodoItem key={todo.id} todos={todo} onUpdate={onUpdate} />
+            <TodoItem
+              key={todo.id}
+              todos={todo}
+              setTodos={setTodos}
+              onUpdate={onUpdate}
+            />
           ))}
     </TodoListBlock>
   );
